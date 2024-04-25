@@ -1,0 +1,119 @@
+{% extends "internal.html" %}
+{% load static %}
+
+{% block title %} Sopa de Letras | GameHub {% endblock %}
+
+{% block css %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{% static 'word_search/css/styles.css' %}">
+{% endblock %}
+
+{% block header %}
+    {% include '_header.html' %}
+{% endblock %}
+
+{% block aside %}
+    {% include '_sidebar.html' %}
+{% endblock %}
+
+{% block main %}
+{{ block.super }}
+<div id="titleSL">SOPA DE LETRAS</div>
+<div id="score-container" style="display: none;">
+    <h2>Puntuación</h2>
+    <p id="score"></p>
+</div>
+
+<div id="options-container">
+    <h2>Opciones</h2>
+    <form id="options-form" method="POST" action="">
+        {% csrf_token %}
+
+      <div class="opt-cat"> 
+        <div>
+            <label for="category" class="level-label">Categoría:</label>
+            <select id="category" class="opt-select" name="category">
+                <option value="">Selecciona una categoría</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+        <div class="opt-dif"> 
+        <div>
+            <label for="difficulty" class="level-label">Dificultad:</label>
+            <select id="difficulty" class="opt-select" name="difficulty">
+                <option value="">Selecciona una dificultad</option>
+                {% for difficulty in difficulties %}
+                    <option value="{{ difficulty }}">{{ difficulty }}</option>
+                {% endfor %}
+            </select>
+        </div>
+      </div>
+
+     
+    </form>
+    <button id="start-game">Comenzar Juego</button>
+</div>
+
+
+<div id="game" style="display: none;">
+    <div id="elementsSP">
+        <div>Categoría: <span id="categorySpan">{{ category }}</span></div>
+    <br>
+    <br>
+    <div>Dificultad: <span id="difficultySpan">{{ difficulty }}</span></div>
+    <br>
+    <br>
+    <h3>Tiempo</h3>
+    <div id="cronometer">
+        <output>00:00:00</output>
+    </div>
+    <br>
+    <br>
+    <div id="attempts" class="attempts" >
+        <h3>Cantidad de Intentos</h3>
+        <output>0</output>
+    </div>
+
+    <br></br>
+    <br></br>
+    <button class="btn-2" id="end-game">Finalizar Juego</button>
+    <button class="btn-2" id="reset-game" style="display: none;">Reiniciar Juego</button>
+    </div>
+    
+    <div class="container-words">
+        <div id="board" class="board">
+            {% for word in words %}
+                {{ word }}
+            {% endfor %}
+        </div>
+        <ul id="wordList" class="word-list">
+            
+            {% for word in words %}
+                <li data-word="{{ word }}">{{ word }}</li>
+            {% empty %}
+                <li>No hay palabras Disponibles.</li>
+            {% endfor %}
+        </ul>
+        
+    </div>
+    
+  
+</div>
+
+
+<div id="score-container" style="display: none;">
+    <h2>Puntuación</h2>
+    <p id="score"></p>
+</div>
+
+
+
+
+{% endblock %}
+{% block js %}
+    <script src="{% static 'word_search/js/controller.js' %}"></script>
+
+{% endblock %}

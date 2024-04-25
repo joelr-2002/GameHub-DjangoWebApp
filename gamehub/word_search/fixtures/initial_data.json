@@ -1,0 +1,577 @@
+[
+    {
+        "model": "word_search.category",
+        "pk": 1,
+        "fields": {
+            "name": "Animales",
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 1,
+        "fields": {
+            "word": "Perro",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 2,
+        "fields": {
+            "word": "Gato",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 3,
+        "fields": {
+            "word": "León",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 4,
+        "fields": {
+            "word": "Tigre",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 5,
+        "fields": {
+            "word": "Pez",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 6,
+        "fields": {
+            "word": "Oso",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 7,
+        "fields": {
+            "word": "Vaca",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 8,
+        "fields": {
+            "word": "Rata",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 9,
+        "fields": {
+            "word": "Ratón",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 10,
+        "fields": {
+            "word": "Lobo",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 11,
+        "fields": {
+            "word": "Loro",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 12,
+        "fields": {
+            "word": "Buho",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 13,
+        "fields": {
+            "word": "Águila",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 14,
+        "fields": {
+            "word": "Cerdo",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 15,
+        "fields": {
+            "word": "Caballo",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 16,
+        "fields": {
+            "word": "Burro",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 17,
+        "fields": {
+            "word": "Canguro",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 18,
+        "fields": {
+            "word": "Koala",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 19,
+        "fields": {
+            "word": "Panda",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 20,
+        "fields": {
+            "word": "Ciervo",
+            "category": 1,
+            "difficulty": "easy",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 21,
+        "fields": {
+            "word": "Jirafa",
+            "category": 1,
+            "difficulty": "medium",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 22,
+        "fields": {
+            "word": "Delfín",
+            "category": 1,
+            "difficulty": "medium",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 23,
+        "fields": {
+            "word": "Ballena",
+            "category": 1,
+            "difficulty": "medium",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 24,
+        "fields": {
+            "word": "Halcón",
+            "category": 1,
+            "difficulty": "medium",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 25,
+        "fields": {
+            "word": "Tortuga",
+            "category": 1,
+            "difficulty": "medium",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 26,
+        "fields": {
+            "word": "Cocodrilo",
+            "category": 1,
+            "difficulty": "medium",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 27,
+        "fields": {
+            "word": "Lagarto",
+            "category": 1,
+            "difficulty": "medium",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 28,
+        "fields": {
+            "word": "Reno",
+            "category": 1,
+            "difficulty": "medium",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 29,
+        "fields": {
+            "word": "Zebra",
+            "category": 1,
+            "difficulty": "medium",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 30,
+        "fields": {
+            "word": "Mula",
+            "category": 1,
+            "difficulty": "medium",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 31,
+        "fields": {
+            "word": "Ardilla",
+            "category": 1,
+            "difficulty": "medium",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 32,
+        "fields": {
+            "word": "Cebra",
+            "category": 1,
+            "difficulty": "medium",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 33,
+        "fields": {
+            "word": "Camello",
+            "category": 1,
+            "difficulty": "medium",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 34,
+        "fields": {
+            "word": "Foca",
+            "category": 1,
+            "difficulty": "medium",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },        
+    {
+        "model": "word_search.word",
+        "pk": 35,
+        "fields": {
+            "word": "Elefante",
+            "category": 1,
+            "difficulty": "hard",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 36,
+        "fields": {
+            "word": "Hipopótamo",
+            "category": 1,
+            "difficulty": "hard",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 37,
+        "fields": {
+            "word": "Rinoceronte",
+            "category": 1,
+            "difficulty": "hard",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 38,
+        "fields": {
+            "word": "Murciélago",
+            "category": 1,
+            "difficulty": "hard",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 39,
+        "fields": {
+            "word": "Tiburón",
+            "category": 1,
+            "difficulty": "hard",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 40,
+        "fields": {
+            "word": "Serpiente",
+            "category": 1,
+            "difficulty": "hard",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 41,
+        "fields": {
+            "word": "Iguana",
+            "category": 1,
+            "difficulty": "hard",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 42,
+        "fields": {
+            "word": "Nutria",
+            "category": 1,
+            "difficulty": "hard",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 43,
+        "fields": {
+            "word": "Mapache",
+            "category": 1,
+            "difficulty": "hard",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 44,
+        "fields": {
+            "word": "Hámster",
+            "category": 1,
+            "difficulty": "hard",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 45,
+        "fields": {
+            "word": "Conejo",
+            "category": 1,
+            "difficulty": "hard",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 46,
+        "fields": {
+            "word": "Liebre",
+            "category": 1,
+            "difficulty": "hard",
+            "length": 4,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "word_search.word",
+        "pk": 47,
+        "fields": {
+            "word": "Erizo",
+            "category": 1,
+            "difficulty": "hard",
+            "length": 5,
+            "creation_date": "2024-04-12T00:00:00Z",
+            "update_date": "2024-04-12T00:00:00Z"
+        }
+    }
+
+
+]
