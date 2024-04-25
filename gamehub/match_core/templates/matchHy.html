@@ -1,0 +1,79 @@
+{% extends "internal.html" %}
+{% load static %}
+
+
+{% block title %} Historial de Partidas | GameHub {% endblock %}
+
+
+{% block css %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{% static 'matchHy/css/styles.css' %}">
+    
+{% endblock %}
+
+{% block header %}
+    {% include '_header.html' %}
+    <!-- {{ block.super }} -->
+{% endblock %}
+
+
+
+{% block aside %}
+    {% include '_sidebar.html' %}
+{% endblock %}
+
+{% block main %}
+<div class="container-header-ranking"> 
+    <h2 class="ranking-title"> Historial </h2>
+    
+    <div class="container-user"> 
+        <img src="{{user.img}}" alt="Profile picture"/>
+        <div id="user-name">
+            <span> {{user.fist_name}} {{user.last_name}}</span>
+        </div>
+    </div>
+</div>
+
+<div id="historyTable">
+  <table>
+    <tr>
+      <th>Jugador</th>
+      <th>Contrincante</th>
+      <th>Juego</th>
+      <th>Puntuación</th>
+      <th>Tiempo</th>
+    </tr>
+    
+    {% if game_history|length == 0 %}
+      <tr>
+        <td colspan="5">No hay partidas registradas</td>
+      </tr>
+    {% endif %}
+    {% for entry in game_history %}
+    <tr>
+      <td>{{ entry.player1.username }}</td>
+      {% if entry.player2.username %}
+          <td>{{ entry.player2.username }}</td>
+      {% else %}
+          <td>-</td>
+      {% endif %}
+      <td>{{ entry.game.name }}</td>
+      <td>{{ entry.points_awarded }}</td>
+      {% if entry.duration %}
+          <td>{{ entry.duration }}</td>
+      {% else %}
+          <td>-</td>
+      {% endif %}
+  </tr>
+  
+    {% endfor %}
+  </table>
+</div>
+        
+{% endblock %}
+
+
+
+{% block js  %}
+  
+{% endblock  %}

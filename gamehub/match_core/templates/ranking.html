@@ -1,0 +1,75 @@
+{% extends "internal.html" %}
+{% load static %}
+
+{% block title %}Ranking | GameHub{% endblock %}
+
+{% block css %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{% static 'ranking/css/styles.css' %}">
+{% endblock %}
+
+{% block header %}
+    {% include '_header.html' %}
+{% endblock %}
+
+{% block aside %}
+    {% include '_sidebar.html' %}
+{% endblock %}
+
+{% block main %}
+<div class="container-header-ranking"> 
+    <h2 class="ranking-title"> Ranking </h2>
+    
+    <div class="container-user"> 
+        <img src="{{user.img}}" alt="Profile picture"/>
+        <div id="user-name">
+            <span> {{user.fist_name}} {{user.last_name}}</span>
+        </div>
+    </div>
+</div>
+
+<form method="GET" id="container-select-game">
+    <label for="game">Filtrar:</label>
+    <select id="game" name="game">
+        <option value="">Todos los juegos</option>
+        <option value="1">Sopa de Letras</option>
+        <option value="2">Damas Chinas</option>
+        <option value="3">Tic Tac Toe</option>
+        <option value="4">Bingo</option>
+        <option value="5">Buscaminas</option>
+    </select>
+    <button type="submit">Mostrar</button>
+</form>
+
+{% if request.GET.game %}
+    {% if request.GET.game == '1' %}
+        <h2>Ranking de Sopa de Letras</h2>
+    {% elif request.GET.game == '2' %}
+        <h2>Ranking de Damas Chinas</h2>
+    {% elif request.GET.game == '3' %}
+        <h2>Ranking de Tic Tac Toe</h2>
+    {% elif request.GET.game == '4' %}
+        <h2>Ranking de Bingo</h2>
+    {% elif request.GET.game == '5' %}
+        <h2>Ranking de Buscaminas</h2>
+    {% endif %}
+{% else %}
+    
+{% endif %}
+<div id="ranking-table">
+    <table>
+        <tr>
+            <th>#</th>
+            <th>Usuario</th>
+            <th>Puntos</th>
+        </tr>
+        {% for player, points in sorted_players %}
+        <tr>
+            <td> {{forloop.counter0|add:1 }} </td>
+            <td>{{ player }}</td>
+            <td>{{ points }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
