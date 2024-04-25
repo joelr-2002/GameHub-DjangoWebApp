@@ -1,0 +1,81 @@
+{% extends "internal.html" %}
+{% load static %}
+
+{% block title %} Tic Tac Toe {% endblock %}
+
+{% block css %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{% static 'tic_tac_toe/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'tic_tac_toe/css/dado.css' %}">
+{% endblock %}
+
+{% block header %}
+    {% include '_header.html' %}
+{% endblock %}
+
+{% block aside %}
+    {% include '_sidebar.html' %}
+{% endblock %}
+  
+{% block main %}
+{{ block.super }}
+  <div id="titleTic">TIC TAC TOE</div>
+
+  <div id="sidebar" class="sidebar" style="display: none;">
+    <h2>Puntuación</h2>
+    <p id="score">0</p>
+    <br></br>
+    <div id="dice-container" style="display: none;">
+      <div class="dice" id="dice">
+        <div class="face front">1</div>
+        <div class="face back">6</div>
+        <div class="face right">3</div>
+        <div class="face left">4</div>
+        <div class="face top">5</div>
+        <div class="face bottom">2</div>
+      </div>
+      <button id="roll-dice" onclick=rollDice()>Lanzar dado</button>
+      <p id="result" value="" style="display:none"></p>
+    </div>
+</div>
+
+  <div id="options-container">
+    <h2 >Dificultad</h2>
+    <form id="options-form">
+      <div class="opponent-container"> 
+        <label class="level-label" for="opponent">Nivel:</label>
+        <select id="opponent" required>
+          <option value="easy">Fácil</option>
+          <option value="hard">Difícil</option>
+        </select>
+      </div>
+
+      <button id="start-game" type="submit">Comenzar Juego</button>
+    </form>
+    <br>
+  </div>
+  <div id="board-container" style="display: none;">
+    <div id="board">
+      {% for row in board %}
+        <div class="row">
+          {% for cell in row %}
+            <div class="cell" data-row="{{ forloop.parentloop.counter0 }}" data-col="{{ forloop.counter0 }}"></div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div id="winner-message" style="display: none;"></div>
+  <div id="reset-container" style="display: none;">
+    <button id="reset" disabled>Reiniciar el Juego</button>
+  </div>
+
+    
+  
+{% endblock %}
+
+{% block js %}
+  <script type="module" src="{% static 'tic_tac_toe/js/controller.js' %}"></script>
+  
+{% endblock %}

@@ -1,0 +1,60 @@
+{% load static %}
+<div class="container-profile">
+    <div class="profile">
+        <picture class="profile">
+            <img src='{{ request.user.profile_picture }}' alt="Profile picture">
+        </picture>
+        <h2 class="font-titan user-name">{{ request.user.username }}</h2>
+        <small id="nombreUsuario">{{ request.user.first_name }}</small>
+    </div>
+
+    <ul class="medals-container">
+            <!-- <img src="{% static 'icons/oro.svg' %}" alt="Ejemplo">
+            <img src="{% static 'icons/plata.svg' %}" alt="Ejemplo">
+            <img src="{% static 'icons/bronce.svg' %}" alt="Ejemplo">
+            <img src="{% static 'icons/diamante.svg' %}" alt="Ejemplo"> -->
+            
+            {% for player_badge in request.user.badges.all %}
+                {% if player_badge.season == current_season %}
+                    <!-- <img src="{{ player_badge.badge.image_svg }}" alt="{{ player_badge.badge.name }}"> -->
+                    {% if player_badge.badge.name == "bronce" %}
+                        <img src="{% static 'icons/bronce.svg' %}" alt="Ejemplo">
+                    {% endif %}
+                    {% if player_badge.badge.name == "plata" %}
+                        <img src="{% static 'icons/plata.svg' %}" alt="Ejemplo">
+                    {% endif %}
+                    {% if player_badge.badge.name == "oro" %}
+                        <img src="{% static 'icons/oro.svg' %}" alt="Ejemplo">
+                    {% endif %}
+                    {% if player_badge.badge.name == "diamante" %}
+                        <img src="{% static 'icons/diamante.svg' %}" alt="Ejemplo">
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+    </ul>
+    
+    <div class="profile-user__points">
+        <span class="font-titan">120hp</span>
+    </div>
+</div>
+<nav class="menu-aside">
+    <ul class="menu-aside__list">
+        <li class="{% if active_view == 'home' %}active-link{% endif %}" >
+            <img src="{% static 'icons/home.svg' %}" alt="Descripción del icono">
+            <a href="{% url 'home' %}">Inicio</a>
+        </li>
+        <li class="{% if active_view == 'game' %}active-link{% endif %}" >
+            <img src="{% static 'icons/joystick.svg' %}" alt="Descripción del icono">
+            <a href="{% url 'home' %}">Juegos</a>
+        </li>
+        <li class="{% if active_view == 'position' %}active-link{% endif %}" >
+            <img src="{% static 'icons/bar_chart_4_bars.svg' %}" alt="Descripción del icono">
+            <a href="{% url 'matchcore:ranking' %}">Posiciones</a>
+        </li>
+        <li class="{% if active_view == 'history' %}active-link{% endif %}" >
+            <img src="{% static 'icons/clear_all.svg' %}" alt="Descripción del icono">
+            <a href="{% url 'matchcore:matchhistory' %}">Historial</a>
+        </li>
+        <li>
+            <img src="{% static 'icons/logout.svg' %}" alt="Descripción del icono">
+            <a href="{% url 'accounts:logout' %}">Cerrar Sesión</a>

@@ -1,0 +1,42 @@
+{% extends "index.html" %}
+{% load static %}
+
+
+{% block head %}{% endblock %}
+
+{% block title %} GameHub | Bienvenido {% endblock %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link type="text/css" rel="stylesheet" href='{% static "css/home.css" %}'>
+    {% block local_css %}
+        
+    {% endblock %}
+{% endblock %}
+
+{% block header %}
+    {% include '_header.html' %}
+{% endblock %}
+
+
+
+{% block aside %}
+    {% include '_sidebar.html' %}
+{% endblock %}
+
+
+{% block main %}
+<a href="{% url 'home' %}" class="back-nav">
+    
+    <span class="material-symbols-outlined">
+        keyboard_backspace
+    </span>
+    <span>Regresar</span>
+</a>
+{% endblock %}
+
+
+
+{% block js  %}
+{% endblock  %}
