@@ -1,0 +1,100 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="icon" type="image/png" sizes="32x32" href='{% static "icons/favicon.ico" %}'>
+  <link rel="stylesheet" href="{% static 'landing_page/css/landing-styles.css' %}">
+  <title>Game Hub</title>
+</head>
+<body>
+  <header class="container-header">
+    <h1 class="container-header__title"> Game <span class="container-header__span">Hub</span> </h1>
+    <div class="header__container-buttons">
+      <button class="buttons signUpButton"> Sign Up </button>
+      <button class="buttons buttons_login" id="loginButton"> Login </button> 
+    </div>  
+  </header>
+  <main>
+    <section class="container-main">
+      <div class="section-info">
+        <h2 class="info__title"> Juegos de mesa online </h2>
+        <p class="info__paragraph"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore sit dolorem tenetur necessitatibus omnis autem ipsa repellat numquam qui deserunt sint porro, soluta recusandae delectus repellendus facere molestiae, aliquam corrupti.</p>
+        <button class="info__button signUpButton"> Empieza a jugar! </button>
+      </div>
+
+      <img src="{% static 'landing_page/imgs/landingp.png' %}" class="main-image" alt="Control picture">
+    </section>
+
+
+    <div id="carousel-wrapper">
+      <div id="menu">
+        <div id="current-option">
+          <span id="current-option-text1" data-previous-text="" data-next-text=""></span>
+          <span id="current-option-text2" data-previous-text="" data-next-text=""></span>
+        </div>
+          <button id="previous-option"></button>
+          <button id="next-option"></button>
+        </div>
+      <div id="image"></div>
+    </div> 
+
+    <section class="container-start-playing">
+      <h3 class="playing-title"> Empieza a jugar en solo 1 minuto </h3>
+      <p class="playing-paragraph"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium aperiam et exercitationem quas eos voluptate, reprehenderit quasi id molestias iste? </p>
+
+      <div class="container-statistics">
+        <div class="container-user-stats">
+          <img src="{% static 'landing_page/imgs/PhUserBold.svg' %}" alt="User icon">
+          <p class="stats-number"> 1000 </p>
+          <p class="stats-text"> Usuarios registrados </p>
+        </div>
+        <div class="container-games-stats">
+          <img src="{% static 'landing_page/imgs/IconoirStatsDownSquare.svg' %}" alt="Stats icon">
+          <p class="stats-number"> 1234 </p>
+          <p class="stats-text"> Partidas completadas </p>
+        </div>
+      </div>
+
+      <div class="container-card">
+        <img src="{% static 'landing_page/imgs/landingp.png' %}" alt="Game image">
+
+        <div class="card-info">
+          <h4> Registrate ahora y empieza a jugar </h4>
+          <p> Lorem ipsum, dolor sit amet consectetur adipisicing elit. </p>
+          <button class="signUpButton"> Registrate ahora </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- <section class="container-our-games">
+      <h3 class="playing-title"> Games </h3>
+      <p class="playing-paragraph"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium aperiam et exercitationem quas eos voluptate, reprehenderit quasi id molestias iste? </p>
+
+      <div class="container-games">
+        <div>
+          <img src="assets/checkers2.png" alt="Checkers image">
+          <p> Checkers </p>
+        </div>
+
+        <div>
+          <img src="assets/wordSearch.png" alt="wordSearch image">
+          <p> Word Search </p>
+        </div>
+
+        <div>
+          <img src="assets/tictactoe.png" alt="TicTacToe image">
+          <p> TicTacToe </p>
+        </div>
+      </div>
+    </section> -->  
+
+<footer class="footer">
+  <p> Copyright@2024 GameHubApp </p>
+</footer>
+</main>
+  <script src="{% static 'landing_page/js/landing.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,863 @@
+{% extends "internal.html" %}
+{% load static %}
+
+{% block title %} Checkers {% endblock %}
+
+{% block css %}
+    {{ block.super }}
+    <style>
+      #app {
+        position: relative;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+      }
+      
+      #board {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        width: 480px;
+        height: 480px;
+      }
+      
+      .report {
+        align-self: flex-end;
+        width: 100px;
+        height: 100px;
+      
+        svg {
+          height: 50%;
+          width: 50%;
+        }
+      }
+      
+      .cell {
+        background-color: #d0dfff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 60px;
+        width: 60px;
+      }
+      
+      .cell-painted {
+        background-color: #0b6dff;
+      }
+      
+      .player-1, .player-2, .queen, .rival-queen {
+        height: 70%;
+        width: 70%;
+        border-radius: 50%;
+      }
+      
+      .player-1 {
+        background-color: #ff0059;
+      }
+      
+      .player-2 {
+        background-color: #fff;
+      }
+      
+      .hint {
+        background-color: #cfa0ff;
+      }
+      
+      .queen {
+        background-color: #ff8c00;
+      }
+
+      .rival-queen {
+        background-color: #ff81ea;
+      }
+      
+      #container-form-report {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #97979740;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+      }
+      
+      #form-report {
+        background-color: #fff;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        padding: 10px;
+        gap: 10px;
+        height: 40%;
+        width: 30%;
+        
+        h3 {
+          font-size: 1.4rem;
+          font-weight: bold;
+        }
+      
+        textarea {
+          background-color: #fff0db;
+          font-size: 1rem;
+          border: none;
+          outline: none;
+          padding: 10px;
+          width: 90%
+        }
+      
+        div {
+          display: flex;
+          gap: 20px;
+      
+          input {
+            border: none;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1rem;
+            background-color: rgb(0, 200, 0);
+            font-weight: bold;
+            color: white;
+          }
+      
+          button {
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 1rem;
+            background-color: red;
+            font-weight: bold;
+            color: white;
+          }
+        }
+      }
+      
+      .modal-hide {
+        display: none !important;
+      }
+
+      .mostrar-ganador {
+        display: none;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 246, 234, 0.907);
+        top: 0;
+        left: 0;
+      }
+
+      .esperar-jugador {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 246, 234, 0.907);
+        top: 0;
+        left: 0;
+      }
+
+      #mostrar-salas li {
+        font-size: 2rem
+      }
+
+      #title {
+        font-size: 3rem;
+      }
+
+      #btn-exit {
+        border: none;
+        background-color: red;
+        color: #fff;
+        font-weight: bold;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        padding: 10px;
+        width: 100px;
+      }
+
+      .show {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .hide {
+        display: none;
+      }
+
+    </style>
+{% endblock %}
+
+{% block header %}
+    {% include '_header.html' %}
+{% endblock %}
+
+{% block aside %}
+    {% include '_sidebar.html' %}
+{% endblock %}
+  
+{% block main %}
+{{ block.super }}
+    <div id="app">
+      <ul id="mostrar-salas"></ul>
+      <ul id="mostrar-jugador"></ul>
+      <section class="grid grid-cols-8" id="board"></section>
+    </div>
+
+    <div class="mostrar-ganador" id="ganador"> 
+      <h1 id="title">  </h1>
+      <button id='btn-exit2'> Salir </button>
+    </div>
+
+    <div class="esperar-jugador" id="esperar-jugador"> 
+      <h1 id="title"> Esperando por jugadores... </h1>
+      <button id='btn-exit'> Salir </button>
+    </div>
+  
+{% endblock %}
+
+{% block js %}
+  <script
+      src="https://cdn.socket.io/4.7.5/socket.io.min.js"
+      integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const socket = io('ws://10.241.24.109:3000/');
+      const ulSalas = document.getElementById("mostrar-salas");
+      const ulPlayer = document.getElementById("mostrar-jugador")
+      document.getElementById('btn-exit').addEventListener('click', () => {
+        window.location.href = '/dashboard'
+      })
+
+      document.getElementById('btn-exit2').addEventListener('click', () => {
+        window.location.href = '/dashboard'
+      })
+
+      socket.emit("joinRoom", '1111');
+      let room = null;
+      let player = null
+
+      socket.on('roomJoined', (data) => {
+        ulPlayer.createElement = "li";
+        ulPlayer.style.fontSize = '2rem';
+        ulPlayer.style.margin = '0'
+        ulPlayer.textContent = "Jugador: " + data.playerId;
+        
+        room = data.roomId;
+        player = data.playerId
+        turnP1 = data.turn === player ? true : false 
+      })
+      
+      socket.on("salasDisponibles", (salas) => {
+        ulSalas.createElement = "li";
+        ulSalas.style.fontSize = '2rem';
+        ulSalas.style.margin = '0';
+
+        ulSalas.textContent = "Sala: " + salas[0] || "Sala: 1111";
+        ulSalas.id = 'sala' + salas[0]
+      });
+
+      socket.on('move', (resultData) => {
+        if (resultData.turn === player) {
+          turnP1 = true
+          board = resultData.board
+        }
+
+        paintBoard()
+        listen()
+      })
+
+      socket.on('roomFull2', ({full}) => {
+        if (full) {
+          document.getElementById('esperar-jugador').classList.toggle('hide')
+        }
+      })
+
+
+      socket.on('won', ({winner}) => {
+        document.getElementById('ganador').classList.toggle('show')
+        document.getElementById('title').textContent = `Ganador: Judador ${winner}`
+        console.log('Winner: ', winner)
+      })
+
+      // // 1 Jugador 1
+      // // 2 Jugador 2
+      // // 3 son las posiciones donde esta permitido moverse
+
+      let turnP1 = false;
+      let selectedCell = null;
+      let moveTo = null;
+      let forcedToEat = false;
+      const queenPositions = [1, 3, 5, 7];
+      const posibleQueenMoves = [];
+
+      const boardContainer = document.getElementById("board");
+
+      let board = [
+        -1, 2, -1, 2, -1, 2, -1, 2, 
+        2, -1, 2, -1, 2, -1, 2, -1, 
+        -1, 2, -1, 2, -1, 2, -1, 2, 
+        0, -1, 0, -1, 0, -1, 0, -1, 
+        -1, 0, -1, 0, -1, 0, -1, 0, 
+        1, -1, 1, -1, 1, -1, 1, -1, 
+        -1, 1, -1, 1, -1, 1, -1, 1, 
+        1, -1, 1, -1, 1, -1, 1, -1
+      ]
+
+      // // Pinta el board en blanco y amarillo
+      function paintBoard() {
+        boardContainer.innerHTML = "";
+        let row = 0;
+        let col = 0;
+
+        for (let cell in board) {
+          const cellElement = document.createElement("div");
+          const pawnP1Element = document.createElement("span");
+          const pawnP2Element = document.createElement("span");
+
+          row = Math.floor(cell / 8);
+          col = Math.floor(cell % 8);
+
+          cellElement.classList.add("cell");
+          if (
+            (row % 2 === 1 && col % 2 === 0) ||
+            (row % 2 === 0 && col % 2 === 1)
+          )
+            cellElement.classList.add("cell-painted");
+
+          if (board[cell] === 1) {
+            pawnP1Element.classList.add("player-1");
+            cellElement.appendChild(pawnP1Element);
+          }
+
+          if (board[cell] === 2) {
+            pawnP2Element.classList.add("player-2");
+            // pawnP2Element.textContent = 2
+            cellElement.appendChild(pawnP2Element);
+          }
+
+          if (board[cell] === 1.5) {
+            pawnP1Element.classList.add("queen");
+            // pawnP1Element.textContent = 1
+            cellElement.appendChild(pawnP1Element);
+          }
+
+          if (board[cell] === 2.5) {
+            pawnP2Element.classList.add("rival-queen");
+            // pawnP1Element.textContent = 1
+            cellElement.appendChild(pawnP2Element);
+          }
+
+          if (board[cell] === 3) {
+            cellElement.classList.add("hint");
+          }
+
+          boardContainer.appendChild(cellElement);
+        }
+      }
+
+      // // Pintamos en base a las posiiones iniciales
+      paintBoard();
+
+      // // Actualizar el tablero
+      async function updateBoard(newBoard, turn = false, move = null) {
+        board = [...newBoard];
+        
+        turnP1 = turn;
+        if (turn === false) {
+          selectedCell = null;
+          moveTo = move;
+
+          const dataToSend = {board, room, player}
+          await socket.emit('move', dataToSend);
+        }
+
+        paintBoard();
+        listen();
+      }
+
+      // // Limpiar los posibles movimientos
+      function cleanHint() {
+        board.forEach((cell, index) => {
+          if (cell === 3) {
+            board[index] = 0;
+          }
+        });
+      }
+
+      // // Actualizar el tablero para nada mas mostrar los posibles movimientos
+      function updatePossibleMoves(newBoard) {
+        board = [...newBoard];
+        paintBoard();
+        listen();
+      }
+
+      // // Puede seguir comiendo?
+      function canEatAgain(myPos) {
+        // Comer en la misma diagonal (Izq)
+        if (board[myPos - 9] === 2 && board[myPos - 18] === 0) {
+          return [myPos, true];
+        }
+
+        // Comer en la misma diagonal (Der)
+        if (board[myPos - 7] === 2 && board[myPos - 14] === 0) {
+          return [myPos, true];
+        }
+
+        // // Comer en ziczac partiendo por la der
+        // if (board[myPos - 7] === 2 && board[myPos - 14] === 0) {
+        //   return [myPos, true]
+        // }
+
+        return [myPos, false];
+      }
+
+      function queenCanEat(initPos, move) {
+        const currentRow = Math.floor(initPos / 8);
+        const currentCol = Math.floor(initPos % 8);
+        const moveRow = Math.floor(move / 8);
+        const moveCol = Math.floor(move % 8);
+
+        for (let pos of posibleQueenMoves) {
+          const posRow = Math.floor(pos / 8);
+          const posCol = Math.floor(pos % 8);
+
+          if (posRow > moveRow && currentRow > posRow && currentCol < posCol) {
+            if (posCol < moveCol) {
+              // Arriba a la derecha
+              board[pos] = 0;
+            }
+          } else if (
+            posRow > moveRow &&
+            currentRow > posRow &&
+            currentCol > posCol
+          ) {
+            if (posCol > moveCol) {
+              // Arriba a la izquierda
+              board[pos] = 0;
+            }
+          } else if (
+            posRow < moveRow &&
+            currentRow < posRow &&
+            currentCol > posCol
+          ) {
+            if (posCol > moveCol) {
+              // Abajo a la derecha
+              console.log("SADSDASD", pos);
+              board[pos] = 0;
+            }
+          } else if (
+            posRow < moveRow &&
+            currentRow < posRow &&
+            currentCol < posCol
+          ) {
+            if (posCol < moveCol) {
+              // Abajo a la izquierda
+              board[pos] = 0;
+            }
+          }
+        }
+
+        posibleQueenMoves.length = 0;
+        updateBoard(board);
+      }
+
+      // Comer pieza
+      function eat(myPos, moveTo) {
+        if (board[myPos] === 1) {
+          // En caso de que pueda comer
+          if (myPos - moveTo === 18) {
+            board[moveTo] = 1;
+            board[myPos - 9] = 0;
+          }
+
+          if (myPos - moveTo === 14) {
+            board[moveTo] = 1;
+            board[myPos - 7] = 0;
+          }
+
+          // No puede comer por lo tanto solamente se mueve
+          if (myPos - moveTo === 9) {
+            board[moveTo] = 1;
+            if (queenPositions.includes(moveTo)) {
+              board[moveTo] = 1.5;
+            }
+          }
+
+          if (myPos - moveTo === 7) {
+            board[moveTo] = 1;
+            if (queenPositions.includes(moveTo)) {
+              board[moveTo] = 1.5;
+            }
+          }
+        }
+        // Movimientos de la reina
+        else if (board[myPos] === 1.5) {
+          // No puede comer por lo tanto solamente se mueve
+          if (board[moveTo] === 3) {
+            board[myPos] = 0;
+            board[moveTo] = 1.5;
+            console.log(posibleQueenMoves);
+            queenCanEat(myPos, moveTo);
+          }
+        }
+
+        board[myPos] = 0;
+
+        cleanHint();
+        updateBoard(board);
+      }
+
+      // Calculando recursivamente los posibles movimientos de la reina
+      // la funcion recibe un numero (pos) y un string (r, l, b) r = right, l = left, b = both, bl = bottom left, br = bottom right
+      function calculateQueenPositions(pos, direction) {
+        const currentRow = Math.floor(pos / 8);
+        const currentCol = Math.floor(pos % 8);
+
+        if (
+          currentRow === 0 ||
+          currentRow === 7 ||
+          currentCol === 0 ||
+          currentCol === 7
+        ) {
+          if (board[pos] === 0) {
+            board[pos] = 3;
+            updatePossibleMoves(board);
+            return;
+          }
+          return;
+        }
+
+        if (direction === "r") {
+          if (board[pos] === 0) {
+            board[pos] = 3;
+            updatePossibleMoves(board);
+            calculateQueenPositions(pos - 7, "r");
+          } else if (board[pos] === 2) {
+            if (board[pos - 7] === 0) posibleQueenMoves.push(pos);
+            calculateQueenPositions(pos - 7, "r");
+          }
+        } else if (direction === "l") {
+          if (board[pos] === 0) {
+            board[pos] = 3;
+            updatePossibleMoves(board);
+            calculateQueenPositions(pos - 9, "l");
+          } else if (board[pos] === 2) {
+            if (board[pos - 9] === 0) posibleQueenMoves.push(pos);
+            calculateQueenPositions(pos - 9, "l");
+          }
+        } else if (direction === "bl") {
+          if (board[pos] === 0) {
+            board[pos] = 3;
+            updatePossibleMoves(board);
+            calculateQueenPositions(pos + 7, "bl");
+          } else if (board[pos] === 2) {
+            if (board[pos + 7] === 0) posibleQueenMoves.push(pos);
+            calculateQueenPositions(pos + 7, "bl");
+          }
+        } else if (direction === "br") {
+          if (board[pos] === 0) {
+            board[pos] = 3;
+            updatePossibleMoves(board);
+            calculateQueenPositions(pos + 9, "br");
+          } else if (board[pos] === 2) {
+            if (board[pos + 9] === 0) posibleQueenMoves.push(pos);
+            calculateQueenPositions(pos + 9, "br");
+          }
+        }
+      }
+
+      // Calculara los posibles movimientos de la reina
+      function calculatePossibleQueenMoves(currentPos) {
+        const currentRow = Math.floor(currentPos / 8);
+        const currentCol = Math.floor(currentPos % 8);
+
+        if (currentCol === 0) {
+          // Posible movimiento
+          const possibleMove1 = board[currentPos - 7];
+          const possibleMove2 = board[currentPos + 9];
+
+          if (possibleMove1 === 2 && possibleMove2 === 2) {
+            if (board[currentPos - 14] === 0) {
+              posibleQueenMoves.push(currentPos - 7);
+              calculateQueenPositions(currentPos - 14, "r");
+            }
+
+            if (board[currentPos + 18] === 0) {
+              posibleQueenMoves.push(currentPos + 9);
+              calculateQueenPositions(currentPos + 18, "br");
+            }
+
+            return;
+          }
+
+          if (possibleMove1 === 2) {
+            if (board[currentPos - 14] === 0) {
+              posibleQueenMoves.push(currentPos - 7);
+              calculateQueenPositions(currentPos - 14, "r");
+              return;
+            }
+          }
+
+          if (possibleMove2 === 2) {
+            if (board[currentPos + 18] === 0) {
+              posibleQueenMoves.push(currentPos + 9);
+              calculateQueenPositions(currentPos + 18, "br");
+              return;
+            }
+          }
+
+          if (possibleMove1 === 0) {
+            calculateQueenPositions(currentPos, "r");
+            return;
+          }
+
+          if (possibleMove2 === 0) {
+            calculateQueenPositions(currentPos + 9, "br");
+            return;
+          }
+        } else if (currentCol === 7) {
+          // Posible movimiento
+          const possibleMove1 = board[currentPos - 9];
+          const possibleMove2 = board[currentPos + 7];
+
+          if (possibleMove1 === 2 && possibleMove2 === 2) {
+            if (board[currentPos - 18] === 0) {
+              posibleQueenMoves.push(currentPos - 9);
+              calculateQueenPositions(currentPos - 18, "l");
+            }
+
+            if (board[currentPos + 14] === 0) {
+              posibleQueenMoves.push(currentPos + 7);
+              calculateQueenPositions(currentPos + 14, "bl");
+            }
+
+            return;
+          }
+
+          if (possibleMove1 === 2) {
+            if (board[currentPos - 18] === 0) {
+              posibleQueenMoves.push(currentPos - 9);
+              calculateQueenPositions(currentPos - 18, "l");
+              return;
+            }
+          }
+
+          if (possibleMove2 === 2) {
+            if (board[currentPos + 14] === 0) {
+              posibleQueenMoves.push(currentPos + 7);
+              calculateQueenPositions(currentPos + 14, "bl");
+              return;
+            }
+          }
+
+          if (possibleMove1 === 0) {
+            calculateQueenPositions(currentPos - 9, "l");
+            return;
+          }
+
+          if (possibleMove2 === 0) {
+            calculateQueenPositions(currentPos + 7, "bl");
+            return;
+          }
+        } else {
+          const possibleMove1 = board[currentPos - 9]; // left
+          const possibleMove2 = board[currentPos - 7]; // right
+          const possibleMove3 = board[currentPos + 7]; // abajo izq
+          const possibleMove4 = board[currentPos + 9]; // abajo der
+
+          if (
+            possibleMove1 === 2 ||
+            possibleMove2 === 2 ||
+            possibleMove3 === 2 ||
+            possibleMove4 === 2
+          ) {
+            if (board[currentPos - 14] === 0 && board[currentPos - 7] !== 1) {
+              posibleQueenMoves.push(currentPos - 7);
+              calculateQueenPositions(currentPos - 14, "r");
+            }
+
+            if (board[currentPos + 14] === 0 && board[currentPos + 7] !== 1) {
+              posibleQueenMoves.push(currentPos + 7);
+              calculateQueenPositions(currentPos + 14, "bl");
+            }
+
+            if (board[currentPos + 18] === 0 && board[currentPos + 9] !== 1) {
+              posibleQueenMoves.push(currentPos + 9);
+              calculateQueenPositions(currentPos + 18, "br");
+            }
+
+            if (board[currentPos - 18] === 0 && board[currentPos - 9] !== 1) {
+              posibleQueenMoves.push(currentPos - 9);
+              calculateQueenPositions(currentPos - 18, "l");
+            }
+
+            return;
+          }
+
+          if (possibleMove1 === 2) {
+            if (board[currentPos - 18] === 0) {
+              calculateQueenPositions(currentPos - 9, "l");
+              return;
+            }
+          }
+
+          if (possibleMove2 === 2) {
+            if (board[currentPos - 14] === 0) {
+              calculateQueenPositions(currentPos - 7, "r");
+              return;
+            }
+          }
+
+          if (possibleMove1 === 0) {
+            calculateQueenPositions(currentPos, "l");
+            return;
+          }
+
+          if (possibleMove2 === 0) {
+            calculateQueenPositions(currentPos - 7, "r");
+            return;
+          }
+        }
+      }
+
+      // // Calculara los posibles movimientos de una ficha
+      function calculatePossibleMoves(currentPos) {
+        const currentRow = Math.floor(currentPos / 8);
+        const currentCol = Math.floor(currentPos % 8);
+
+        if (currentCol === 0) {
+          // Posible movimiento
+          const possibleMove = board[currentPos - 7];
+
+          if (possibleMove === 0) {
+            board[currentPos - 7] = 3;
+          }
+
+          if (possibleMove === 2) {
+            if (board[currentPos - 14] === 0) {
+              board[currentPos - 14] = 3;
+            }
+          }
+
+          updatePossibleMoves(board);
+        } else if (currentCol === 7) {
+          const possibleMove = board[currentPos - 9];
+
+          if (possibleMove === 0) {
+            board[currentPos - 9] = 3;
+          }
+
+          if (possibleMove === 2) {
+            if (board[currentPos - 18] === 0) {
+              board[currentPos - 18] = 3;
+            }
+          }
+
+          updatePossibleMoves(board);
+        } else {
+          const possibleMove1 = board[currentPos - 9];
+          const possibleMove2 = board[currentPos - 7];
+
+          if (possibleMove1 === 2 && possibleMove2 === 2) {
+            if (board[currentPos - 18] === 0) {
+              board[currentPos - 18] = 3;
+            }
+
+            if (board[currentPos - 14] === 0) {
+              board[currentPos - 14] = 3;
+            }
+
+            updatePossibleMoves(board);
+            return;
+          }
+
+          if (possibleMove1 === 2) {
+            if (board[currentPos - 18] === 0) {
+              board[currentPos - 18] = 3;
+              updatePossibleMoves(board);
+              return;
+            }
+          }
+
+          if (possibleMove2 === 2) {
+            if (board[currentPos - 14] === 0) {
+              board[currentPos - 14] = 3;
+              updatePossibleMoves(board);
+              return;
+            }
+          }
+
+          if (possibleMove1 === 0) {
+            board[currentPos - 9] = 3;
+          }
+
+          if (possibleMove2 === 0) {
+            board[currentPos - 7] = 3;
+          }
+
+          updatePossibleMoves(board);
+        }
+      }
+
+      function listen() {
+        const boardCells = document.querySelectorAll(".cell");
+        boardCells.forEach((cell, index) => {
+          cell.addEventListener("click", () => {
+            // Movimientos para el usuario 1
+            if (turnP1 && board[index] === 1) {
+              cleanHint();
+              calculatePossibleMoves(index);
+              selectedCell = index;
+            } else if (turnP1 && board[index] === 1.5) {
+              cleanHint();
+              calculatePossibleQueenMoves(index);
+              selectedCell = index;
+            } else if (
+              turnP1 &&
+              board[selectedCell] === 1.5 &&
+              board[index] === 3
+            ) {
+              moveTo = index;
+              eat(selectedCell, moveTo);
+            } else if (
+              turnP1 &&
+              board[selectedCell] === 1 &&
+              board[index] === 3
+            ) {
+              if (selectedCell - index !== 7 && selectedCell - index !== 9) {
+                moveTo = index;
+                
+                const canEat = canEatAgain(moveTo);
+                eat(selectedCell, moveTo);
+  
+                selectedCell = moveTo;
+                if (canEat[1]) {
+                  selectedCell = canEat[0];
+                  calculatePossibleMoves(selectedCell);
+                  updateBoard(board, true);
+                }
+              } else {
+                board[selectedCell] = 0
+                board[index] = 1
+                cleanHint()
+                updateBoard(board)
+              }
+            }
+          });
+        });
+      }
+      listen();
+    </script>
+  
+{% endblock %}

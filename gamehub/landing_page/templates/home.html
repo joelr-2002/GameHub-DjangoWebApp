@@ -1,0 +1,97 @@
+{% extends "internal.html" %}
+{% load static %}
+
+
+{% block title %} GameHub | Bienvenido {% endblock %}
+{% block head %} 
+    <meta name="csrf-token" content="{{ csrf_token }}">
+{% endblock %}
+
+{% block local_css %}
+    <link type="text/css" rel="stylesheet" href="{% static 'landing_page/css/styles.css' %}">
+{% endblock %}
+
+{% block header %}
+    {% include '_header.html' %}
+    <!-- {{ block.super }} -->
+{% endblock %}
+
+
+
+{% block aside %}
+    {% include '_sidebar.html' %}
+{% endblock %}
+
+
+{% block main %}
+
+    <div class="game-container">
+        <div id="chinese_checkers" data-toggle="modal" data-target="modal-game" data-option="chinese">
+            <h1>Damas Chinas</h1>
+            <img src=" {% static 'landing_page/imgs/imageCheckers.png' %} " alt="">
+        </div>
+
+        <div data-toggle="modal" data-target="modal-game" data-option="x0">
+            <h1>Tic Tac Toe</h1>
+            <img src=" {% static 'landing_page/imgs/imageTicTacToe.png' %} " alt="">
+        </div>
+
+        <div data-toggle="modal" data-target="modal-game" data-option="letters">
+            <h1>Sopa de Letras</h1>
+            <img src=" {% static 'landing_page/imgs/imageWordSearch.png' %} " alt="">
+        </div>
+
+        <div id="buscaminas" data-toggle="modal" data-target="modal-game" data-option="buscaminas">
+            <h1> Buscaminas </h1>
+            <img class="trp" src="https://play-lh.googleusercontent.com/9J1I19HacL73XevL51gWyS1FjXuGDU6yE_wjQDAoV31OKltrh_glMyS_qBVUyzUX2g=w240-h480-rw" alt="">
+        </div>    
+
+        <div id="bingo" data-toggle="modal" data-target="modal-game" data-option="bingo">
+            <h1> Bingo </h1>
+            <img class="trp"src="https://cdn-icons-png.flaticon.com/512/5488/5488304.png" alt="">
+        </div>
+        
+        <div id="digger" data-toggle="modal" data-target="modal-game" data-option="digger">
+            <h1> Digger </h1>
+            <img class="trp"src="https://cdn-icons-png.flaticon.com/256/2519/2519782.png" alt="">
+        </div>  
+    </div>
+
+
+    
+    <!-- <button id="sendActionBtn">Enviar Acción</button> -->
+    <div id="modal-game" class="d-none">
+        <div class="container">
+            <div>
+                <h1>Iniciar Partida de Sopa de letras</h1>
+                <span class="close-modal" data-toggle="modal" data-target="modal-game">X</span>
+            </div>
+    
+            <div class="container-options">
+                <div>
+                    <label for="difficulty">Dificultad:</label>
+                    <select id="difficulty">
+                        <!-- Opciones de dificultad se llenarán dinámicamente -->
+                    </select>
+                </div>
+                <div>
+                    <label for="category">Temática:</label>
+                    <select id="category">
+                        <!-- Opciones de categoría se llenarán dinámicamente -->
+                    </select>
+                </div>
+            </div>
+            <div class="btn-container">
+                <!-- <button id="confirmSelection">Confirmar</button> -->
+                <button id="confirmSelection" onclick="confirmSelection()">Confirmar</button>
+
+            <!-- <button data-toggle="modal" data-target="modal-game">Cerrar</button> -->
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js  %}
+    <script src="{% static 'landing_page/js/controller.js' %}"></script>
+{% endblock  %}
