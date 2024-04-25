@@ -1,0 +1,41 @@
+{% extends "external.html" %}
+{% load static %}
+
+{% block title %} GameHub | Inicia Sesión {% endblock %}
+
+
+{% block css %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{% static 'accounts/css/styles.css' %}">
+    
+{% endblock %}
+
+{% block main %}
+<section>
+    <div class="form-container login-form">
+        <h2>GAMEHUB</h2>
+        <form method='post' action="{% url 'accounts:login' %}" class="login-form">
+            {% csrf_token %}
+            <input type="text" name="{{ form.username.name }}" placeholder="Correo Electrónico" value="{{ form.username.value|default_if_none:'' }}" class="" />
+            <input type="password" name="{{ form.password.name }}" placeholder="Contraseña" class="" />
+            <button class="button btn-one" type="submit">Iniciar sesión</button>
+            <a class="button btn-redirect" href="{% url 'accounts:register' %}" class="button">Registrarse</a>
+        </form>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="modal-banned" style="display:block; position:fixed; z-index:100; background:white; padding:20px; border:2px solid red;">
+                    <p>{{ message }}</p>
+                    <button onclick="this.parentElement.style.display='none';">Cerrar</button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <svg class="self-end" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#5000ca" fill-opacity="1" d="M0,160L60,160C120,160,240,160,360,181.3C480,203,600,245,720,250.7C840,256,960,224,1080,197.3C1200,171,1320,149,1380,138.7L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
+</section>
+{% endblock %}
+
+
+
+{% block js  %}
+    <script src="{% static 'accounts/js/controller.js' %}"></script>
+{% endblock  %}

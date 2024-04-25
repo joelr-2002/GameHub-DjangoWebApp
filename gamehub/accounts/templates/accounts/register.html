@@ -1,0 +1,82 @@
+
+<!--  -->
+
+
+{% extends "external.html" %}
+{% load static %}
+
+{% block title %} Registro | GameHub {% endblock %}
+
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />  
+    <link type="text/css" rel="stylesheet" href="{% static 'accounts/css/styles.css' %}">
+    
+{% endblock %}
+
+{% block main %}
+<section>
+    <a href="{% url 'accounts:login' %}" class="bback-nav">
+    
+        <span class="material-symbols-outlined">
+            keyboard_backspace
+        </span>
+        <span>Regresar</span>
+    </a>    
+    <div class="form-container">
+        <h2>Registro</h2>
+        <form method="post" class="">
+            {% csrf_token %}
+            <input type="text" name="{{ form.first_name.name }}" placeholder="Nombre" value="{{ form.first_name.value|default_if_none:'' }}" class="" required>
+            <input type="text" name="{{ form.last_name.name }}" placeholder="Apellido" value="{{ form.last_name.value|default_if_none:'' }}" class="" required>
+            <input type="email" name="{{ form.email.name }}" placeholder="Correo electrónico" value="{{ form.email.value|default_if_none:'' }}" class="" required>
+            <input type="text" name="{{ form.username.name }}" placeholder="Nombre de usuario" value="{{ form.username.value|default_if_none:'' }}" class="" required/>
+            <input type="password" name="{{ form.password1.name }}" placeholder="Contraseña" class="" required>
+            <input type="password" name="{{ form.password2.name }}" placeholder="Confirmar contraseña" class="" required/>
+            <input type="url" name="{{ form.profile_picture.name }}" placeholder="Link de foto de perfil" class="" />
+            <button type="submit" class="button">Registrarse</button>
+        </form>
+    </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="modal-banned" style="display:block;">
+                <p>{{ message }}</p>
+                {% if form.first_name.errors %}
+                    <div class="error">{{ form.first_name.errors.as_text }}</div>
+                {% endif %}
+                {% if form.last_name.errors %}
+                    <div class="error">{{ form.last_name.errors.as_text }}</div>
+                {% endif %}
+                <!-- {% if form.password1.errors %}
+                    <div class="error">{{ form.password1.errors.as_text }}</div>
+                {% endif %}
+                {% if form.password2.errors %}
+                    <div class="error">{{ form.password2.errors.as_text }}</div>
+                {% endif %} -->
+                <!-- {% if form.profile_picture.errors %}
+                    <div class="error">{{ form.profile_picture.errors.as_text }}</div>
+                {% endif %} -->
+
+
+                {% if form.email.errors %}
+                    <div class="error">{{ form.email.errors.as_text }}</div>
+                {% endif %}
+                {% if form.username.errors %}
+                    <div class="error">{{ form.username.errors.as_text }}</div>
+                {% endif %}
+                <button onclick="this.parentElement.style.display='none';">Cerrar</button>
+                {% if message.tags == 'success' %}
+                <a class="button btn-redirect" href="{% url 'accounts:login' %}">Ir a Iniciar Sesión</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <svg class="self-end" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#5000ca" fill-opacity="1" d="M0,160L60,160C120,160,240,160,360,181.3C480,203,600,245,720,250.7C840,256,960,224,1080,197.3C1200,171,1320,149,1380,138.7L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
+</section>
+{% endblock %}
+
+
+{% block js  %}
+    <!-- <script src="{% static 'accounts/js/controller.js' %}"></script> -->
+{% endblock  %}

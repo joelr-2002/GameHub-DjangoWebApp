@@ -1,0 +1,11 @@
+[
+    {
+        "model": "accounts.Role",
+        "pk": 1,
+        "fields": {
+            "name": "Usuario",
+            "description": "Rol de usuario estándar",
+            "created_at": "2024-04-12T00:00:00Z"
+        }
+    }
+]
