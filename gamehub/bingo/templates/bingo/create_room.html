@@ -1,0 +1,57 @@
+{% extends 'bingo/base.html' %}
+
+{% load static %}
+
+{% block css %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href='{% static "css/bingo.css" %}'>
+  {% endblock %}
+
+
+{% block header %}
+    {% include '_header.html' %}
+    <!-- {{ block.super }} -->
+{% endblock %}
+
+
+
+{% block aside %}
+    {% include '_sidebar.html' %}
+{% endblock %}
+
+
+{% block main %}
+<div class="create_room">
+ <div class="col-lg-6 col-sm-8 ">
+     <h1 class="text-black" style="display: flex; aling-item: center; justify-content: center" >BINGO</h1>
+  <div class="my-3">
+    <h5>Username:</h5>
+    <input id="username" type="text" class="form-control" autocomplete="off" placeholder="{{ request.user.username }}" readonly />
+
+    <div>
+        <button id="new_room" class="my-2 btn btn-success">Create Room</button>
+        <button id="join_room" class="my-2 btn btn-primary">Join Room</button>
+    </div>
+   
+    <input id="room_name" type="text" class="d-none my-1 form-control" autocomplete="off" placeholder="Room name" />
+    <button id="create_room" class="d-none my-2 btn btn-success">Create Room</button>
+    <button id="join_room_btn" class="d-none my-2 btn btn-success">Join Room</button>
+  </div>
+  <div class="my-3">
+    <h5>Lobby's en línea : </h5>
+    <div id="onlinerooms">
+      
+    </div>
+  </div>
+ </div>
+</div>
+{% endblock main %}
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.min.js" integrity="sha512-B4skI5FiLurS86aioJx9VfozI1wjqrn6aTdJH+YQUmCZum/ZibPBTX55k5d9XM6EsKePDInkLVrN7vPmJxc1qA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link 
+
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+/>
+<script src="{% static 'js/create_room.js' %}"></script>
+{% endblock js %}

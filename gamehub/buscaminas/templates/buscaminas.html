@@ -1,0 +1,46 @@
+{% extends "internal.html" %}
+{% load static %}
+
+{% block title %} Tic Tac Toe {% endblock %}
+
+{% block css %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{% static 'buscaminas/css/style.css' %}">
+{% endblock %}
+
+{% block header %}
+    {% include '_header.html' %}
+{% endblock %}
+
+{% block aside %}
+    {% include '_sidebar.html' %}
+{% endblock %}
+  
+{% block main %}
+{{ block.super }}
+    <div id="app"?> 
+      <h1 class="title"> BUSCAMINAS</h1>
+      <canvas></canvas>
+    
+      <div class="container">
+        <h1> Score: <span id="score"> </span> </h1>
+      </div>
+
+      <div class="modal" id="game-over">
+        <div class="info-modal"> 
+          <h1> GAME OVER! </h1>
+          <h2> SCORE: <span id="final-score"> </span>pts</h2>
+          <div> 
+            <button class="btn-restart" id='btn-restart'> Reiniciar </button>
+            <button class='btn-exit' id='btn-exit'> Salir </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+{% endblock %}
+
+{% block js %}
+  <script src="{% static 'buscaminas/js/main.js' %}"></script>
+  
+{% endblock %}

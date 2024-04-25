@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: black;
+}
+
+body {
+  background-color: #f4f4f4;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+a {
+  text-decoration: none !important;
+}
+.main {
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  width: 100%;
+}
+.sideme {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.grid {
+  display: -ms-grid;
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  gap: 10px;
+  margin-bottom: 5%;
+}
+.grid span {
+  width: 4rem;
+  cursor: pointer;
+  height: 4rem;
+  color: black;
+  border: 2px solid #ddd;
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+  font-size: 1.3em;
+  font-weight: bolder;
+}
+#bingodiv {
+  color: black;
+  letter-spacing: 4px;
+}
+.grid span.clicked {
+  background: #ddd;
+}
+.create_room {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.side-info {
+  width: 30%;
+  color: black;
+}
+.bingoSuccess {
+  background: #a0dca0 !important;
+  border: none !important;
+}
+.bingState {
+  font-size: 30px;
+  font-weight: bolder;
+  color: #555;
+}
+#infodiv {
+  padding: 20px;
+  background-color: #e6e6e6;
+  min-height: 450px;
+  max-height: 450px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+.send-msg {
+  background: #e6e6e6;
+  border: none;
+  color: black;
+  font-size: 13px;
+  outline: 0 !important;
+}
+.prevStep {
+  font-weight: bolder;
+  font-size: 1.3em;
+  color: #777 !important;
+}
+.send-msg:focus {
+  background: #f0f0f0 !important;
+  color: black;
+}
+.lastStep {
+  background: #8e7bbf !important;
+  border: none !important;
+}
+.send-msg::placeholder {
+  color: black;
+}
+.side-text {
+  border-bottom: 1px solid #bbb;
+  margin-top: 13px;
+  font-size: 12px;
+}
+#onlinerooms {
+  display: flex;
+  flex-wrap: wrap;
+}
+.room-div {
+  padding: 10px;
+  background-color: #ccc;
+  width: fit-content;
+  margin: 4px;
+}
+.room-div:hover {
+  background-color: #ddd;
+}
+
+@media screen and (max-width: 1000px) {
+  .sideme {
+    flex-direction: column;
+  }
+  .side-info {
+    width: 80%;
+    align-self: center;
+    margin-top: 20px;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .grid {
+    gap: 3px;
+  }
+  .side-info {
+    width: 100%;
+  }
+}
